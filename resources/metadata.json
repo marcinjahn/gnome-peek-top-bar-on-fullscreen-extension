@@ -1,0 +1,8 @@
+{
+  "name": "Panel On Fullscreen",
+  "description": "Panel on the fullscreen!!!",
+  "uuid": "panel-on-fullscreen@marcinjahn.com",
+  "shell-version": ["44"],
+  "url": "https://github.com/marcinjahn/gnome-panel-on-fullscreen-extension",
+  "version": 1
+}
