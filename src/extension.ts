@@ -1,32 +1,26 @@
-import { TopHotEdge } from "./TopHotEdge";
+import { getPanelHeight, hidePanel, showPanel } from "utils/panel";
+import { HotEdge } from "./edges/hot-edge";
+import { isFullscreen } from "utils/display";
 
 const Main = imports.ui.main;
 
 class Extension {
-  private _uuid: string | null = null;
-  private _hotCornersSub: any = null;
+  private uuid: string | null = null;
+  private hotEdge: HotEdge | null = null;
+  private hotCornersSub: any = null;
 
   constructor(uuid: string) {
-    this._uuid = uuid;
+    this.uuid = uuid;
   }
 
   enable() {
-    log(`Enabling extension ${this._uuid}`);
-
-    // setInterval(() => {
-    //   log('interval')
-    //   layoutManager.panelBox.visible = true;
-    // }, 1000)
+    log(`Enabling extension ${this.uuid}`);
 
     const layoutManager = Main.layoutManager;
-    this._hotCornersSub = layoutManager.connect(
-      "hot-corners-changed",
-      (data) => {
-        log("hot-corners-changed");
-        log(JSON.stringify(data));
-        this.setupHotEdge();
-      }
-    );
+    this.hotCornersSub = layoutManager.connect("hot-corners-changed", () => {
+      log("hot-corners-changed");
+      this.setupHotEdge();
+    });
 
     this.setupHotEdge();
 
@@ -45,42 +39,44 @@ class Extension {
   }
 
   setupHotEdge() {
-    const layoutManager = Main.layoutManager;
-    const primaryMonitor = layoutManager.primaryMonitor;
+    this.hotEdge?.dispose();
 
-    const panelHeight = layoutManager.panelBox.get_children()[0].height;
-    log("panel height: " + panelHeight);
+    const primaryMonitor = Main.layoutManager.primaryMonitor;
 
-    const edge = new TopHotEdge(
+    this.hotEdge = new HotEdge(
       primaryMonitor,
-      panelHeight,
+      getPanelHeight(),
       () => {
-        log("SHOW PANEL");
-
-        if (!primaryMonitor.inFullscreen) {
+        if (!isFullscreen(primaryMonitor)) {
           return;
         }
 
-        // show
+        log("SHOW PANEL");
+        showPanel();
       },
       () => {
-        log("HIDE PANEL");
-        if (!primaryMonitor.inFullscreen) {
+        if (!isFullscreen(primaryMonitor)) {
           return;
         }
 
-        // hide
+        log("HIDE PANEL");
+        hidePanel();
       }
     );
 
-    edge.initialize();
-    Main.layoutManager.hotCorners.push(edge);
+    this.hotEdge.initialize();
+    Main.layoutManager.hotCorners.push(this.hotEdge);
   }
 
   disable() {
-    log(`Disabling extension ${this._uuid}`);
+    log(`Disabling extension ${this.uuid}`);
 
-    Main.layoutManager.disconnect(this._hotCornersSub);
+    this.hotEdge?.dispose();
+    this.hotEdge = null;
+
+    Main.layoutManager.disconnect(this.hotCornersSub);
+    this.hotCornersSub = null;
+
     Main.layoutManager._updateHotCorners();
   }
 }
