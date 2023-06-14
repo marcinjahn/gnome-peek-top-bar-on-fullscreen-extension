@@ -1,6 +1,12 @@
-import { getPanelHeight, hidePanel, showPanel } from "utils/panel";
+import {
+  getPanelHeight,
+  hidePanel,
+  isAnyPanelMenuOpen,
+  showPanel,
+} from "./utils/panel";
 import { HotEdge } from "./edges/hot-edge";
-import { isFullscreen } from "utils/display";
+import { isFullscreen } from "./utils/display";
+import { delay, disposeDelayTimeouts } from "./utils/delay";
 
 const Main = imports.ui.main;
 
@@ -18,24 +24,10 @@ class Extension {
 
     const layoutManager = Main.layoutManager;
     this.hotCornersSub = layoutManager.connect("hot-corners-changed", () => {
-      log("hot-corners-changed");
       this.setupHotEdge();
     });
 
     this.setupHotEdge();
-
-    // const display = global.display;
-
-    // fires whenever something goes fullscreen (or out of it) on any screen
-    // display.connect('in-fullscreen-changed', () => {
-    //   log('in-fullscreen-changed event fired');
-
-    //   // find out if primary monitor is fullscreen
-    //   const primaryMonitor = layoutManager.primaryMonitor;
-    //   if (!primaryMonitor.inFullscreen) {
-    //     return;
-    //   }
-    // });
   }
 
   setupHotEdge() {
@@ -60,8 +52,11 @@ class Extension {
         }
 
         log("HIDE PANEL");
-        hidePanel();
-      }
+        delay(200).then(() => {
+          hidePanel();
+        });
+      },
+      () => !isAnyPanelMenuOpen()
     );
 
     this.hotEdge.initialize();
@@ -76,6 +71,8 @@ class Extension {
 
     Main.layoutManager.disconnect(this.hotCornersSub);
     this.hotCornersSub = null;
+
+    disposeDelayTimeouts();
 
     Main.layoutManager._updateHotCorners();
   }

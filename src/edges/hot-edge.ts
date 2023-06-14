@@ -1,7 +1,8 @@
 import { Actor } from "@gi-ts/clutter1";
-import { registerGObjectClass } from "utils/gobject";
+
+import { registerGObjectClass } from "../utils/gobject";
 import { Barrier, HitDirection, TriggerMode } from "./barrier";
-import { BarrierLeaveDetector } from "./leave-detection/barrier-leave-detector";
+import { LeaveDetector, CursorPositionLeaveDetector } from "./leave-detection";
 
 const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
@@ -13,29 +14,29 @@ const Shell = imports.gi.Shell;
 @registerGObjectClass
 export class HotEdge extends Actor {
   private barrier: Barrier | null = null;
-  private leaveDetector: BarrierLeaveDetector | null = null;
+  private leaveDetector: LeaveDetector | null = null;
   private _isTriggered = false;
 
   constructor(
     private monitor: Monitor,
     private leaveOffset: number,
     private triggerAction: () => void,
-    private leaveAction: () => void
+    private leaveAction: () => void,
+    private leaveCondition?: () => boolean
   ) {
     super();
     this.connect("destroy", this.dispose.bind(this));
   }
 
   initialize() {
-    log("Creating hot edge");
     const { x, y, width } = this.monitor;
 
     this.barrier = new Barrier(
       {
         x1: x,
         x2: x + width,
-        y1: y,
-        y2: y,
+        y1: y + 1,
+        y2: y + 1,
       },
       HitDirection.FromBottom,
       TriggerMode.Delayed,
@@ -55,7 +56,7 @@ export class HotEdge extends Actor {
 
     const { x, y, width } = this.monitor;
 
-    this.leaveDetector = new BarrierLeaveDetector(
+    this.leaveDetector = new CursorPositionLeaveDetector(
       {
         x1: x,
         x2: x + width,
@@ -63,7 +64,8 @@ export class HotEdge extends Actor {
         y2: y + this.leaveOffset,
       },
       HitDirection.FromTop,
-      this.onLeave.bind(this)
+      this.onLeave.bind(this),
+      this.leaveCondition
     );
 
     this.leaveDetector.activate();

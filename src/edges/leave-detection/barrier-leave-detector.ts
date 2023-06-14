@@ -1,6 +1,7 @@
 import { Barrier, HitDirection, Position, TriggerMode } from "../barrier";
+import { LeaveDetector } from "./leave-detector";
 
-export class BarrierLeaveDetector {
+export class BarrierLeaveDetector implements LeaveDetector {
   private barrier: Barrier;
 
   constructor(

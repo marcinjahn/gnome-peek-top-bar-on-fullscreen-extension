@@ -1,6 +1,6 @@
 {
   "name": "Panel On Fullscreen",
-  "description": "Panel on the fullscreen!!!",
+  "description": "Panel on the fullscreen!!! \n\nThis extension is not compatible with Gnome's \"Hot Corner\" feature, which takes you to Overview when you hover your mouse at the top-left corner of the screen.",
   "uuid": "panel-on-fullscreen@marcinjahn.com",
   "shell-version": ["44"],
   "url": "https://github.com/marcinjahn/gnome-panel-on-fullscreen-extension",
