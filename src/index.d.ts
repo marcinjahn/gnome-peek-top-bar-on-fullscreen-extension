@@ -10,6 +10,7 @@ declare global {
     gi: {
       Shell: any;
       Meta: any;
+      St: any;
     };
     lang: any;
     ui: {
@@ -17,6 +18,7 @@ declare global {
       lightbox: any;
       messageTray: any;
       main: {
+        sessionMode: any;
         notify: (text: string, body: string) => void;
         messageTray: {
           add(source: any): any;
@@ -28,6 +30,7 @@ declare global {
           primaryMonitor: Monitor;
           panelBox: any; //St.BoxLayout
           monitors: Monitor[];
+          uiGroup: any;
           primaryIndex: number;
           addChrome(param: any, options?: any): any;
           removeChrome(param: any): any;

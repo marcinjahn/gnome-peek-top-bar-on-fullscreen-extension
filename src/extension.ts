@@ -1,19 +1,19 @@
-import {
-  getPanelHeight,
-  hidePanel,
-  isAnyPanelMenuOpen,
-  showPanel,
-} from "./utils/panel";
 import { HotEdge } from "./edges/hot-edge";
 import { isFullscreen } from "./utils/display";
 import { delay, disposeDelayTimeouts } from "./utils/delay";
+import { PanelManager } from "./panel/panel-manager";
+import { WaylandPanelManager } from "panel/wayland-panel-manager";
+import { X11PanelManager } from "panel/x11-panel-manager";
+import { getPanelHeight, isAnyPanelMenuOpen } from "panel/utils";
 
 const Main = imports.ui.main;
+const Meta = imports.gi.Meta;
 
 class Extension {
   private uuid: string | null = null;
   private hotEdge: HotEdge | null = null;
   private hotCornersSub: any = null;
+  private panelManager: PanelManager | null = null;
 
   constructor(uuid: string) {
     this.uuid = uuid;
@@ -21,6 +21,12 @@ class Extension {
 
   enable() {
     log(`Enabling extension ${this.uuid}`);
+
+    if (Meta.is_wayland_compositor()) {
+      this.panelManager = new WaylandPanelManager();
+    } else {
+      this.panelManager = new X11PanelManager();
+    }
 
     const layoutManager = Main.layoutManager;
     this.hotCornersSub = layoutManager.connect("hot-corners-changed", () => {
@@ -43,17 +49,15 @@ class Extension {
           return;
         }
 
-        log("SHOW PANEL");
-        showPanel();
+        this.panelManager?.showPanel();
       },
       () => {
         if (!isFullscreen(primaryMonitor)) {
           return;
         }
 
-        log("HIDE PANEL");
         delay(200).then(() => {
-          hidePanel();
+          this.panelManager?.hidePanel();
         });
       },
       () => !isAnyPanelMenuOpen()
@@ -71,6 +75,9 @@ class Extension {
 
     Main.layoutManager.disconnect(this.hotCornersSub);
     this.hotCornersSub = null;
+
+    this.panelManager?.dispose();
+    this.panelManager = null;
 
     disposeDelayTimeouts();
 

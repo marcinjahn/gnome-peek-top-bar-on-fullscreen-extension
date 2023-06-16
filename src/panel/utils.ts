@@ -4,16 +4,6 @@ export function getPanelHeight(): number {
   return panelBox.get_children()[0].height;
 }
 
-export function showPanel(): void {
-  panelBox.visible = true;
-  // panelBox.get_children()[0].fadeIn();
-}
-
-export function hidePanel(): void {
-  panelBox.visible = false;
-  // panelBox.get_children()[0].fadeOut();
-}
-
 export function isAnyPanelMenuOpen(): boolean {
   const statusArea = panelBox.get_children()[0].statusArea;
 
