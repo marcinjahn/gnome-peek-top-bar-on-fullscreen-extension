@@ -6,3 +6,5 @@ the screen, and the top bar will show up. Take the cursor away, and it will
 disappear.
 
 This is similar to what macOS offers for full screen apps.
+
+!!WORK IN PROGRESS!!
