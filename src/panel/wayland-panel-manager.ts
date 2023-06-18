@@ -12,6 +12,8 @@ const Shell = imports.gi.Shell;
 const St = imports.gi.St;
 const Main = imports.ui.main;
 
+const TOP_BAR_DUMB_INDICATOR = "";
+
 /**
  * On Wayland, making the panel visible is not enough,
  * there is some weird issue that causes the panel to stay invisible,
@@ -58,7 +60,7 @@ export class WaylandPanelManager implements PanelManager {
 
     // windowActor.show();
 
-    // spawn_command_line_async('gjs /home/mnj/code/private/gnome-extensions/gnome-panel-on-fullscreen-extension/dist/app.js');
+    // spawn_command_line_async('gjs /home/mnj/code/private/gnome-extensions/gnome-top-bar-on-fullscreen-extension/dist/app.js');
 
     // const app = new Shell.App();
     // app.activate();
@@ -108,13 +110,6 @@ export class FullMenu extends imports.ui.panelMenu.Button {
 
   constructor() {
     super(0.5, "full");
-
-    // let label = new St.Label({
-    //   text: 'full',
-    //   y_expand: true,
-    //   y_align: ActorAlign.CENTER,
-    // });
-    // this.add_actor(label);
 
     this.menu.addMenuItem(new FullMenuItem());
     this.menu.actor.height = 1;
