@@ -57,6 +57,10 @@ class Extension {
         }
 
         delay(200).then(() => {
+          if (!isFullscreen(primaryMonitor)) {
+            return;
+          }
+
           this.panelManager?.hidePanel();
         });
       },
