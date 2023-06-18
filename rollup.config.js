@@ -19,11 +19,6 @@ const globals = {
 
 const external = [...Object.keys(globals)];
 
-const prefsFooter = [
-  "var init = prefs.init;",
-  "var fillPreferencesWindow = prefs.fillPreferencesWindow;",
-].join("\n");
-
 export default [
   {
     input: "src/extension.ts",
@@ -61,31 +56,4 @@ export default [
       }),
     ],
   },
-  // {
-  //   input: "src/prefs.ts",
-  //   output: {
-  //     file: `${buildPath}/prefs.js`,
-  //     format: "iife",
-  //     exports: "default",
-  //     name: "prefs",
-  //     globals,
-  //     footer: prefsFooter,
-  //   },
-  //   treeshake: {
-  //     moduleSideEffects: "no-external",
-  //   },
-  //   external,
-  //   plugins: [
-  //     commonjs(),
-  //     nodeResolve({
-  //       preferBuiltins: false,
-  //     }),
-  //     typescript({
-  //       tsconfig: "./tsconfig.json",
-  //     }),
-  //     cleanup({
-  //       comments: "none",
-  //     }),
-  //   ],
-  // },
 ];

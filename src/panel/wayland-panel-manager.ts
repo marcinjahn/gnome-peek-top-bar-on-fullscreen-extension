@@ -24,7 +24,7 @@ export class WaylandPanelManager implements PanelManager {
 
     Main.panel.addToStatusArea(
       TOP_BAR_DUMB_INDICATOR,
-      new FullMenu(),
+      new DumbMenu(),
       0,
       "left"
     );
@@ -42,7 +42,7 @@ export class WaylandPanelManager implements PanelManager {
 }
 
 @registerClass
-export class FullMenu extends PanelMenuButton {
+export class DumbMenu extends PanelMenuButton {
   constructor() {
     super(0.5, TOP_BAR_DUMB_INDICATOR);
 
