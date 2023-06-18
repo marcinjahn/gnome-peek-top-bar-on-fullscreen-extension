@@ -1,120 +1,51 @@
 import { registerClass } from "@gi-ts/gobject2";
-import { delay } from "../utils/delay";
 import { PanelManager } from "./panel-manager";
-import { ActorAlign } from "@gi-ts/clutter1";
 
-import { Actor } from "@gi-ts/clutter1";
-
-import { spawn_command_line_async } from "@gi-ts/glib2";
-
-const panelBox = imports.ui.main.layoutManager.panelBox;
-const Shell = imports.gi.Shell;
-const St = imports.gi.St;
 const Main = imports.ui.main;
+const PanelBox = Main.layoutManager.panelBox;
+const StatusArea = Main.panel.statusArea;
+const PopupMenu = imports.ui.popupMenu;
+const PanelMenuButton = imports.ui.panelMenu.Button;
 
-const TOP_BAR_DUMB_INDICATOR = "";
+const TOP_BAR_DUMB_INDICATOR = "top-bar-on-fullscreen@marcinjahn.com-indicator";
 
 /**
  * On Wayland, making the panel visible is not enough,
  * there is some weird issue that causes the panel to stay invisible,
- * even though it becomes clickable. A workaround proposed by
- * Javad Rahmatzadeh is to modify panel's height, which
- * causes it to be rendered properly on the screen.
- * https://gitlab.gnome.org/jrahmatzadeh/just-perfection/-/blob/main/src/lib/API.js#L367-380
+ * even though it becomes clickable. As a workaround, on Wayland a dumb
+ * top bar indicator is added and activated when the panel is supposed
+ * to show up. That causes the panel to be visible, at the cost
+ * of requiring the user to click outside of the panel to hide it.
  */
 export class WaylandPanelManager implements PanelManager {
-  private heightChangeIsOn = false;
-  private isInitialHeight = true;
-
   showPanel(): void {
-    panelBox.visible = true;
+    PanelBox.visible = true;
 
     Main.panel.addToStatusArea(
-      "topbaronfullscreenhelper",
+      TOP_BAR_DUMB_INDICATOR,
       new FullMenu(),
       0,
       "left"
     );
-    Main.panel.statusArea.topbaronfullscreenhelper.menu.toggle();
-
-    // imports.ui.main.panel.toggleCalendar();
-    // imports.ui.main.panel.toggleCalendar();
-    // imports.ui.main.panel._leftBox.get_child_at_index(2).get_child().menu.toggle()
-    log("calendar toggled");
-    // this.heightChangeIsOn = true;
-    // this.runHeightChanges();
-
-    // let windowActor = new Actor({
-    //   width: 400,
-    //   height: 400,
-    //   reactive: true
-    //   });
-
-    // let windowContent = new imports.gi.St.Label({
-    //       text: 'Hello, World!'
-    //   });
-
-    // windowActor.add_child(windowContent);
-
-    // global.stage.add_child(windowActor);
-
-    // windowActor.show();
-
-    // spawn_command_line_async('gjs /home/mnj/code/private/gnome-extensions/gnome-top-bar-on-fullscreen-extension/dist/app.js');
-
-    // const app = new Shell.App();
-    // app.activate();
-    // log('fake app active');
-  }
-
-  private runHeightChanges() {
-    const run = () => {
-      if (!this.heightChangeIsOn && this.isInitialHeight) {
-        return;
-      }
-
-      delay(20).then(() => {
-        this.changeHeight();
-        run();
-      });
-    };
-
-    run();
-  }
-
-  private changeHeight() {
-    if (this.isInitialHeight) {
-      panelBox.height--;
-      this.isInitialHeight = false;
-    } else {
-      panelBox.height++;
-      this.isInitialHeight = true;
-    }
+    StatusArea[TOP_BAR_DUMB_INDICATOR]?.menu.toggle();
   }
 
   hidePanel(): void {
-    this.heightChangeIsOn = false;
-    panelBox.visible = false;
-    Main.panel.statusArea.topbaronfullscreenhelper.destroy();
+    PanelBox.visible = false;
+    StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
   }
 
   dispose() {
-    this.heightChangeIsOn = false;
-    Main.panel.statusArea.topbaronfullscreenhelper?.destroy();
+    StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
   }
 }
 
 @registerClass
-export class FullMenu extends imports.ui.panelMenu.Button {
-  public name = "FullMenu";
-
+export class FullMenu extends PanelMenuButton {
   constructor() {
-    super(0.5, "full");
+    super(0.5, TOP_BAR_DUMB_INDICATOR);
 
-    this.menu.addMenuItem(new FullMenuItem());
-    this.menu.actor.height = 1;
+    this.menu.addMenuItem(new PopupMenu.PopupBaseMenuItem());
+    this.menu.actor.height = 0;
   }
 }
-
-@registerClass
-class FullMenuItem extends imports.ui.popupMenu.PopupBaseMenuItem {}
