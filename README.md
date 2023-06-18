@@ -7,6 +7,8 @@ you can quickly check the time, or swich some toggles.
 
 This is similar to what macOS offers for full screen apps.
 
+![Project preview](./img/preview.webp)
+
 On Wayland, to hide the top bar, you need to click the primary mouse button
 somewhere outside of the bar. On X11, just take the cursor away from the bar.
 
