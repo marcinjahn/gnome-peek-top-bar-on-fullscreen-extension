@@ -11,10 +11,7 @@
     "out": "./@gi-ts"
   },
   "libraries": {
-    "Adw": ["1"],
     "GObject": ["2.0"],
-    "Gio": ["2.0"],
-    "Gtk": ["4.0"],
     "GLib": ["2.0"],
     "Clutter": ["1.0"]
   }

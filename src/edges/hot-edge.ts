@@ -4,9 +4,6 @@ import { registerGObjectClass } from "../utils/gobject";
 import { Barrier, HitDirection, TriggerMode } from "./barrier";
 import { LeaveDetector, CursorPositionLeaveDetector } from "./leave-detection";
 
-const Meta = imports.gi.Meta;
-const Shell = imports.gi.Shell;
-
 /**
  * Edge detection, hardcoded for top edge, since
  * I don't need anything else at the moment
@@ -52,8 +49,6 @@ export class HotEdge extends Actor {
     }
     this._isTriggered = true;
 
-    log("entered");
-
     const { x, y, width } = this.monitor;
 
     this.leaveDetector = new CursorPositionLeaveDetector(
@@ -79,11 +74,7 @@ export class HotEdge extends Actor {
     }
 
     this._isTriggered = false;
-
     this.disposeOfLeaveDetector();
-
-    log("left");
-
     this.leaveAction();
   }
 

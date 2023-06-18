@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Actor } from "@gi-ts/clutter1";
-import { Settings } from "@gi-ts/gio2";
 import { MixerControl } from "@gi-types/gvc1";
 
 export {};
@@ -73,7 +72,6 @@ declare global {
         initTranslations: (domain: string) => void;
         getCurrentExtension: () => any;
         openPrefs: () => void;
-        getSettings: (id: string) => Settings;
       };
       config: any;
     };
