@@ -1,5 +1,5 @@
 {
-  "name": "top-bar-on-fullscreen",
+  "name": "peek-top-bar-on-fullscreen",
   "version": "1.0.0",
   "description": "A Gnome Shell extension that allows you to hide selected devices from the Quick Settings audio devices panel",
   "main": "extension.js",
@@ -9,10 +9,10 @@
     "generate-gi-ts": "gi-ts generate && find ./@gi-ts -type f -exec sed -i '1i// @ts-nocheck' {} \\;",
     "build": "glib-compile-schemas resources/schemas/ && npm run clean && rollup -c",
     "start:dev:wayland": "npm run build && dbus-run-session -- gnome-shell --nested --wayland",
-    "linkdist": "ln -s \"$PWD/dist\" \"$HOME/.local/share/gnome-shell/extensions/top-bar-on-fullscreen@marcinjahn.com\"",
-    "zip": "npm run build && rm -rf './dist/top-bar-on-fullscreen@marcinjahn.com.zip' && cd ./dist && zip -qr 'top-bar-on-fullscreen@marcinjahn.com.zip' .",
+    "linkdist": "ln -s \"$PWD/dist\" \"$HOME/.local/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com\"",
+    "zip": "npm run build && rm -rf './dist/peek-top-bar-on-fullscreen@marcinjahn.com.zip' && cd ./dist && zip -qr 'peek-top-bar-on-fullscreen@marcinjahn.com.zip' .",
     "bump-version": "./scripts/bump-version.sh",
-    "log:extension": "journalctl -f -o cat GNOME_SHELL_EXTENSION_UUID=top-bar-on-fullscreen@marcinjahn.com",
+    "log:extension": "journalctl -f -o cat GNOME_SHELL_EXTENSION_UUID=peek-top-bar-on-fullscreen@marcinjahn.com",
     "log:prefs": "journalctl -f -o cat /usr/bin/gjs"
   },
   "author": "Marcin Jahn <jahnmarcin@outlook.com>",

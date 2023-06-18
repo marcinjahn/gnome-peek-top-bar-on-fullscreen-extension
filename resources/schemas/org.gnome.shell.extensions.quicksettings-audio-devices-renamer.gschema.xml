@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.gnome.shell.extensions.top-bar-on-fullscreen"
-          path="/org/gnome/shell/extensions/top-bar-on-fullscreen/">
+  <schema id="org.gnome.shell.extensions.peek-top-bar-on-fullscreen"
+          path="/org/gnome/shell/extensions/peek-top-bar-on-fullscreen/">
     <!-- See also: https://docs.gtk.org/glib/gvariant-format-strings.html -->
     <key name="output-names-map" type="a{ss}">
       <default>[]</default>

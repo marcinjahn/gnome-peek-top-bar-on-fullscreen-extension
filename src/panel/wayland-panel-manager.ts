@@ -7,7 +7,8 @@ const StatusArea = Main.panel.statusArea;
 const PopupMenu = imports.ui.popupMenu;
 const PanelMenuButton = imports.ui.panelMenu.Button;
 
-const TOP_BAR_DUMB_INDICATOR = "top-bar-on-fullscreen@marcinjahn.com-indicator";
+const TOP_BAR_DUMB_INDICATOR =
+  "peek-top-bar-on-fullscreen@marcinjahn.com-indicator";
 
 /**
  * On Wayland, making the panel visible is not enough,
