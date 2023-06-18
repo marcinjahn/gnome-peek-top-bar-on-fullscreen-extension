@@ -49,4 +49,6 @@ export class DumbMenu extends PanelMenuButton {
     this.menu.addMenuItem(new PopupMenu.PopupBaseMenuItem());
     this.menu.actor.height = 0;
   }
+
+  _onOpenStateChanged() {}
 }
