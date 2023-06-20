@@ -20,6 +20,11 @@ somewhere outside of the bar. On X11, just take the cursor away from the bar.
 
 [peek-topbar-on-fullscreen-preview.webm](https://github.com/marcinjahn/gnome-top-bar-on-fullscreen-extension/assets/10273406/91fb0638-8dcd-421f-8be0-a9457c02cbc7)
 
+## Remarks
+
+- this extension is incompatible with [Blur My
+  Shell](https://extensions.gnome.org/extension/3193/blur-my-shell/) extension.
+
 ## Mentions
 
 - [OMG! Linux](https://www.omglinux.com/show-top-bar-in-fullscreen-on-gnome-shell/)

@@ -1,8 +1,8 @@
 {
   "name": "Peek Top Bar on Fullscreen",
-  "description": "Show the top bar (panel) on demand while having full screen content on (like a YouTube video). Just hover the mouse cursor to the top of the screen, and the panel will show up. This way, you can quickly check the time, or swich some toggles. This is similar to what macOS offers for full screen apps.\n\nOn Wayland, to hide the top bar, you need to click the primary mouse button somewhere outside of the bar. On X11, just take the cursor away from the bar.",
+  "description": "Show the top bar (panel) on demand while having full screen content on (like a YouTube video). Just hover the mouse cursor to the top of the screen, and the panel will show up. This way, you can quickly check the time, or swich some toggles. This is similar to what macOS offers for full screen apps.\n\nOn Wayland, to hide the top bar, you need to click the primary mouse button somewhere outside of the bar. On X11, just take the cursor away from the bar.\nThis extension is incompatible with Blur My Shell extension.",
   "uuid": "peek-top-bar-on-fullscreen@marcinjahn.com",
   "shell-version": ["43", "44"],
   "url": "https://github.com/marcinjahn/gnome-peek-top-bar-on-fullscreen-extension",
-  "version": 2
+  "version": 3
 }
