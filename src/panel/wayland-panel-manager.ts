@@ -36,6 +36,12 @@ export class WaylandPanelManager implements PanelManager {
     StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
   }
 
+  resetAnyTweaks(): void {
+    StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
+    // Main.panel._updatePanel();
+    log("panel updated");
+  }
+
   dispose() {
     StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
   }

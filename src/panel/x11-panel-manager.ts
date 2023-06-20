@@ -11,5 +11,7 @@ export class X11PanelManager implements PanelManager {
     PanelBox.visible = false;
   }
 
+  resetAnyTweaks(): void {}
+
   dispose() {}
 }

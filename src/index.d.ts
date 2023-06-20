@@ -25,6 +25,7 @@ declare global {
         panel: any;
         wm: any;
         layoutManager: {
+          _inOverview: boolean;
           hotCorners: Actor[];
           primaryMonitor: Monitor;
           panelBox: any; //St.BoxLayout

@@ -1,10 +1,14 @@
 import { HotEdge } from "./edges/hot-edge";
-import { isFullscreen } from "./utils/display";
+import { isFullscreen, isInOverview } from "./utils/display";
 import { delay, disposeDelayTimeouts } from "./utils/delay";
 import { PanelManager } from "./panel/panel-manager";
 import { WaylandPanelManager } from "panel/wayland-panel-manager";
 import { X11PanelManager } from "panel/x11-panel-manager";
-import { getPanelHeight, isAnyPanelMenuOpen } from "panel/utils";
+import {
+  getPanelHeight,
+  isAnyPanelMenuOpen,
+  toggleAnyIndicator,
+} from "panel/utils";
 
 const Main = imports.ui.main;
 const Meta = imports.gi.Meta;
@@ -45,26 +49,41 @@ class Extension {
       primaryMonitor,
       getPanelHeight(),
       () => {
+        log("on trigger");
         if (!isFullscreen(primaryMonitor)) {
           return;
         }
+
+        log("SHOW");
 
         this.panelManager?.showPanel();
       },
       () => {
-        if (!isFullscreen(primaryMonitor)) {
+        log("on leave");
+        if (!isFullscreen(primaryMonitor) || isInOverview()) {
+          this.panelManager?.resetAnyTweaks();
+          toggleAnyIndicator();
           return;
         }
-
+        log("delay");
         delay(200).then(() => {
-          if (!isFullscreen(primaryMonitor)) {
+          if (!isFullscreen(primaryMonitor) || isInOverview()) {
+            this.panelManager?.resetAnyTweaks();
+            toggleAnyIndicator();
             return;
           }
+          log("HIDE");
 
           this.panelManager?.hidePanel();
         });
       },
-      () => !isAnyPanelMenuOpen()
+      () => {
+        const panelsNotOpen = !isAnyPanelMenuOpen();
+        const isOverview = isInOverview();
+        log("any panel open: " + !panelsNotOpen);
+        log("is overview: " + isOverview);
+        return panelsNotOpen || isOverview;
+      }
     );
 
     this.hotEdge.initialize();
