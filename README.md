@@ -19,3 +19,7 @@ somewhere outside of the bar. On X11, just take the cursor away from the bar.
 ## Preview
 
 [peek-topbar-on-fullscreen-preview.webm](https://github.com/marcinjahn/gnome-top-bar-on-fullscreen-extension/assets/10273406/91fb0638-8dcd-421f-8be0-a9457c02cbc7)
+
+## Mentions
+
+- [OMG! Linux](https://www.omglinux.com/show-top-bar-in-fullscreen-on-gnome-shell/)
