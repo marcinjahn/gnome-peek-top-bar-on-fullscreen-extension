@@ -76,7 +76,6 @@ export class HotEdge extends Actor {
     this._isTriggered = false;
     this.disposeOfLeaveDetector();
     this.leaveAction();
-    log("left");
   }
 
   dispose() {

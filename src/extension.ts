@@ -49,41 +49,30 @@ class Extension {
       primaryMonitor,
       getPanelHeight(),
       () => {
-        log("on trigger");
         if (!isFullscreen(primaryMonitor)) {
           return;
         }
 
-        log("SHOW");
-
         this.panelManager?.showPanel();
       },
       () => {
-        log("on leave");
         if (!isFullscreen(primaryMonitor) || isInOverview()) {
           this.panelManager?.resetAnyTweaks();
           toggleAnyIndicator();
           return;
         }
-        log("delay");
+
         delay(200).then(() => {
           if (!isFullscreen(primaryMonitor) || isInOverview()) {
             this.panelManager?.resetAnyTweaks();
             toggleAnyIndicator();
             return;
           }
-          log("HIDE");
 
           this.panelManager?.hidePanel();
         });
       },
-      () => {
-        const panelsNotOpen = !isAnyPanelMenuOpen();
-        const isOverview = isInOverview();
-        log("any panel open: " + !panelsNotOpen);
-        log("is overview: " + isOverview);
-        return panelsNotOpen || isOverview;
-      }
+      () => !isAnyPanelMenuOpen() || isInOverview()
     );
 
     this.hotEdge.initialize();
