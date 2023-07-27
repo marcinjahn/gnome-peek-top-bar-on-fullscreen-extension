@@ -11,8 +11,8 @@ class DummyWindow {
     if (!win) {
       win = new Gtk.ApplicationWindow({
         application: app,
-        defaultHeight: 100,
-        defaultWidth: 100,
+        defaultHeight: 0,
+        defaultWidth: 0,
       });
     }
     win.set_keep_above(true);
