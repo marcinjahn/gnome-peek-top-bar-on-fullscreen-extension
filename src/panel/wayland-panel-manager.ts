@@ -1,58 +1,31 @@
-import { registerClass } from "@gi-ts/gobject2";
 import { PanelManager } from "./panel-manager";
+import { spawn_command_line_async } from "@gi-ts/glib2";
 
 const Main = imports.ui.main;
 const PanelBox = Main.layoutManager.panelBox;
-const StatusArea = Main.panel.statusArea;
-const PopupMenu = imports.ui.popupMenu;
-const PanelMenuButton = imports.ui.panelMenu.Button;
-
-const TOP_BAR_DUMB_INDICATOR =
-  "peek-top-bar-on-fullscreen@marcinjahn.com-indicator";
 
 /**
  * On Wayland, making the panel visible is not enough,
  * there is some weird issue that causes the panel to stay invisible,
- * even though it becomes clickable. As a workaround, on Wayland a dumb
- * top bar indicator is added and activated when the panel is supposed
- * to show up. That causes the panel to be visible, at the cost
- * of requiring the user to click outside of the panel to hide it.
+ * even though it becomes clickable. As a workaround, on Wayland a concealed dumb
+ * window with active always on top makes it work as expected.
  */
 export class WaylandPanelManager implements PanelManager {
+  constructor() {
+    spawn_command_line_async(
+      "gjs .local/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com/dummy-window.js"
+    );
+  }
+
   showPanel(): void {
     PanelBox.visible = true;
-
-    Main.panel.addToStatusArea(
-      TOP_BAR_DUMB_INDICATOR,
-      new DumbMenu(),
-      0,
-      "left"
-    );
-    StatusArea[TOP_BAR_DUMB_INDICATOR]?.menu.toggle();
   }
 
   hidePanel(): void {
     PanelBox.visible = false;
-    StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
   }
 
-  resetAnyTweaks(): void {
-    StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
-  }
+  resetAnyTweaks() {}
 
-  dispose() {
-    StatusArea[TOP_BAR_DUMB_INDICATOR]?.destroy();
-  }
-}
-
-@registerClass
-export class DumbMenu extends PanelMenuButton {
-  constructor() {
-    super(0.5, TOP_BAR_DUMB_INDICATOR);
-
-    this.menu.addMenuItem(new PopupMenu.PopupBaseMenuItem());
-    this.menu.actor.height = 0;
-  }
-
-  _onOpenStateChanged() {}
+  dispose(): void {}
 }
