@@ -13,9 +13,6 @@ This is similar to what macOS offers for full screen apps.
 
 ![Project preview](./img/preview.webp)
 
-On Wayland, to hide the top bar, you need to click the primary mouse button
-somewhere outside of the bar. On X11, just take the cursor away from the bar.
-
 ## Preview
 
 [peek-topbar-on-fullscreen-preview.webm](https://github.com/marcinjahn/gnome-top-bar-on-fullscreen-extension/assets/10273406/91fb0638-8dcd-421f-8be0-a9457c02cbc7)

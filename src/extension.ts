@@ -57,14 +57,12 @@ class Extension {
       },
       () => {
         if (!isFullscreen(primaryMonitor) || isInOverview()) {
-          this.panelManager?.resetAnyTweaks();
           toggleAnyIndicator();
           return;
         }
 
         delay(200).then(() => {
           if (!isFullscreen(primaryMonitor) || isInOverview()) {
-            this.panelManager?.resetAnyTweaks();
             toggleAnyIndicator();
             return;
           }
