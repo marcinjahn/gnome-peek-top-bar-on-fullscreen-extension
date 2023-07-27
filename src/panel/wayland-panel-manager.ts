@@ -13,7 +13,7 @@ const PanelBox = Main.layoutManager.panelBox;
 export class WaylandPanelManager implements PanelManager {
   constructor() {
     spawn_command_line_async(
-      "gjs .local/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com/dummy-window.js"
+      'bash -c "GDK_BACKEND=x11 gjs .local/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com/dummy-window.js"'
     );
   }
 
@@ -27,5 +27,7 @@ export class WaylandPanelManager implements PanelManager {
 
   resetAnyTweaks() {}
 
-  dispose(): void {}
+  dispose(): void {
+    spawn_command_line_async('pkill -f "marcinjahn.com/dummy-window.js"');
+  }
 }

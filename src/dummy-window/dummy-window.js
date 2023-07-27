@@ -35,3 +35,5 @@ class DummyWindow {
     this.dummyApp.quit();
   }
 }
+
+new DummyWindow();
