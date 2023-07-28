@@ -10,6 +10,10 @@ declare global {
       Shell: any;
       Meta: any;
       St: any;
+      Gtk: any;
+      versions: {
+        Gtk: string;
+      };
     };
     lang: any;
     ui: {
