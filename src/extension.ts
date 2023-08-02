@@ -27,7 +27,7 @@ class Extension {
     log(`Enabling extension ${this.uuid}`);
 
     if (Meta.is_wayland_compositor()) {
-      this.panelManager = new WaylandPanelManager();
+      this.panelManager = WaylandPanelManager.createAndInitialize();
     } else {
       this.panelManager = new X11PanelManager();
     }

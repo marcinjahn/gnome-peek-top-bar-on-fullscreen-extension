@@ -13,10 +13,13 @@ const extensionPath = ExtensionUtils.getCurrentExtension().path;
  * app with invisible window (always on top) is started. That makes the panel visible.
  */
 export class WaylandPanelManager implements PanelManager {
-  constructor() {
-    spawn_command_line_async(
-      `sh -c "GDK_BACKEND=x11 gjs ${extensionPath}/dummy-window.js"`
-    );
+  private constructor() {}
+
+  static createAndInitialize(): PanelManager {
+    const manager = new WaylandPanelManager();
+    manager.spawnDummyApp();
+
+    return manager;
   }
 
   showPanel(): void {
@@ -29,5 +32,11 @@ export class WaylandPanelManager implements PanelManager {
 
   dispose(): void {
     spawn_command_line_async('pkill -f "marcinjahn.com/dummy-window.js"');
+  }
+
+  private async spawnDummyApp() {
+    spawn_command_line_async(
+      `sh -c "GDK_BACKEND=x11 gjs ${extensionPath}/dummy-window.js"`
+    );
   }
 }
