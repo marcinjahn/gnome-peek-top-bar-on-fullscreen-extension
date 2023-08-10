@@ -17,6 +17,36 @@ This is similar to what macOS offers for full screen apps.
 
 [peek-topbar-on-fullscreen-preview.webm](https://github.com/marcinjahn/gnome-top-bar-on-fullscreen-extension/assets/10273406/91fb0638-8dcd-421f-8be0-a9457c02cbc7)
 
+## Contributing
+
+In case of problems, it's a good idea to open an
+[Issue](https://github.com/marcinjahn/gnome-peek-top-bar-on-fullscreen-extension/issues).
+If you know how to fix it, open a [Pull
+Request](https://github.com/marcinjahn/gnome-peek-top-bar-on-fullscreen-extension/pulls)!
+
+### Local Development
+
+To run the extension locally "from sources":
+
+```
+git clone git@github.com:marcinjahn/gnome-peek-top-bar-on-fullscreen-extension.git
+cd gnome-peek-top-bar-on-fullscreen-extension
+npm i
+npm run build
+npm run linkdist
+```
+
+The last command will creae a soft link at
+`~/.local/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com`,
+which allows you to enable the extension on your system (e.g., via [Extensions
+Manager](https://flathub.org/apps/com.mattjakeman.ExtensionManager)).
+
+Anytime you change anything, rebuild the extension with `npm run build`, and
+restart the session:
+
+- on Wayland, log out and log in (I know, it's painful),
+- on X11, open "Run a Command" dialog (Alt + F2), type "r" and press Enter
+
 ## Remarks
 
 - this extension is incompatible with [Blur My
