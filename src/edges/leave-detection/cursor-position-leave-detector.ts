@@ -1,10 +1,4 @@
-import {
-  timeout_add,
-  PRIORITY_DEFAULT,
-  SOURCE_CONTINUE,
-  source_remove,
-  SOURCE_REMOVE,
-} from "@gi-ts/glib2";
+import Glib from "@gi-ts/glib2";
 
 import { HitDirection, Position } from "../barrier";
 import { LeaveDetector } from "./leave-detector";
@@ -26,20 +20,20 @@ export class CursorPositionLeaveDetector implements LeaveDetector {
   }
 
   activate() {
-    this.timeoutId = timeout_add(PRIORITY_DEFAULT, 400, () => {
+    this.timeoutId = Glib.timeout_add(Glib.PRIORITY_DEFAULT, 400, () => {
       if (!this.isOutOfBounds() || !this.leaveCondition?.()) {
-        return SOURCE_CONTINUE;
+        return Glib.SOURCE_CONTINUE;
       }
 
       this.leaveAction();
 
-      return SOURCE_REMOVE;
+      return Glib.SOURCE_REMOVE;
     });
   }
 
   dispose() {
     if (this.timeoutId) {
-      source_remove(this.timeoutId);
+      Glib.source_remove(this.timeoutId);
       this.timeoutId = null;
     }
   }

@@ -1,4 +1,6 @@
-import { Actor } from "@gi-ts/clutter1";
+import { Monitor } from "gnomejs://main.js";
+
+import Clutter from "@gi-ts/clutter1";
 
 import { registerGObjectClass } from "../utils/gobject";
 import { Barrier, HitDirection, TriggerMode } from "./barrier";
@@ -9,7 +11,7 @@ import { LeaveDetector, CursorPositionLeaveDetector } from "./leave-detection";
  * I don't need anything else at the moment
  */
 @registerGObjectClass
-export class HotEdge extends Actor {
+export class HotEdge extends Clutter.Actor {
   private barrier: Barrier | null = null;
   private leaveDetector: LeaveDetector | null = null;
   private _isTriggered = false;

@@ -3,21 +3,28 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import cleanup from "rollup-plugin-cleanup";
 import copy from "rollup-plugin-copy";
-import styles from "rollup-plugin-styles";
 
 const buildPath = "dist";
 
-const globals = {
-  "@gi-types/gvc1": "imports.gi.Gvc",
-  "@gi-ts/gtk4": "imports.gi.Gtk",
-  "@gi-ts/gio2": "imports.gi.Gio",
-  "@gi-ts/adw1": "imports.gi.Adw",
-  "@gi-ts/glib2": "imports.gi.GLib",
-  "@gi-ts/clutter1": "imports.gi.Clutter",
-  "@gi-ts/gobject2": "imports.gi.GObject",
+const commonPaths = {
+  "@gi-ts/adw1": "gi://Adw",
+  "@gi-ts/gtk4": "gi://Gtk?version=4.0",
+  "@gi-types/gvc1": "gi://Gvc",
+  "@gi-ts/glib2": "gi://GLib",
+  "@gi-ts/gio2": "gi://Gio",
+  "@gi-types/meta10": "gi://Meta",
+  "@gi-ts/clutter1": "gi://Clutter",
+  "@gi-ts/gobject2": "gi://GObject",
 };
 
-const external = [...Object.keys(globals)];
+const extensionPaths = {
+  ...commonPaths,
+  "gnomejs://extension.js":
+    "resource:///org/gnome/shell/extensions/extension.js",
+  "gnomejs://main.js": "resource:///org/gnome/shell/ui/main.js",
+  "gnomejs://volume.js": "resource:///org/gnome/shell/ui/status/volume.js",
+  "gnomejs://layout.js": "resource:///org/gnome/shell/ui/layout.js",
+};
 
 export default [
   {
@@ -27,13 +34,12 @@ export default [
     },
     output: {
       file: `${buildPath}/extension.js`,
-      format: "iife",
+      format: "es",
       name: "init",
       exports: "default",
-      globals,
+      paths: extensionPaths,
       assetFileNames: "[name][extname]",
     },
-    external,
     plugins: [
       commonjs(),
       nodeResolve({
@@ -42,14 +48,13 @@ export default [
       typescript({
         tsconfig: "./tsconfig.json",
       }),
-      styles({
-        mode: ["extract", `stylesheet.css`],
-      }),
+      // styles({
+      //   mode: ["extract", `stylesheet.css`],
+      // }),
       copy({
         targets: [
           { src: "./resources/metadata.json", dest: `${buildPath}` },
           { src: "./resources/schemas", dest: `${buildPath}` },
-          { src: "./src/dummy-window/dummy-window.js", dest: `${buildPath}` },
         ],
       }),
       cleanup({

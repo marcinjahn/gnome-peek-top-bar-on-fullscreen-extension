@@ -1,11 +1,11 @@
-const PanelBox = imports.ui.main.layoutManager.panelBox;
+import * as Main from "gnomejs://main.js";
 
 export function getPanelHeight(): number {
-  return PanelBox.get_children()[0].height;
+  return Main.layoutManager.panelBox.get_children()[0].height;
 }
 
 export function isAnyPanelMenuOpen(): boolean {
-  const statusArea = PanelBox.get_children()[0].statusArea;
+  const statusArea = Main.layoutManager.panelBox.get_children()[0].statusArea;
 
   const opennableIndicators = Object.keys(statusArea)
     .filter((indicator) => !!statusArea[indicator].menu)
@@ -17,7 +17,7 @@ export function isAnyPanelMenuOpen(): boolean {
 }
 
 export function toggleAnyIndicator(): void {
-  const statusArea = PanelBox.get_children()[0].statusArea;
+  const statusArea = Main.layoutManager.panelBox.get_children()[0].statusArea;
 
   const opennableIndicators = Object.keys(statusArea)
     .filter((indicator) => !!statusArea[indicator].menu)
