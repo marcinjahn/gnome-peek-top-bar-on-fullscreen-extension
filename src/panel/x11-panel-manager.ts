@@ -1,6 +1,8 @@
+import * as Main from "gnomejs://main.js";
+
 import { PanelManager } from "./panel-manager";
 
-const PanelBox = imports.ui.main.layoutManager.panelBox;
+const PanelBox = Main.layoutManager.panelBox;
 
 export class X11PanelManager implements PanelManager {
   showPanel(): void {

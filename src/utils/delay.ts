@@ -1,20 +1,19 @@
-import {
-  PRIORITY_DEFAULT,
-  SOURCE_REMOVE,
-  timeout_add,
-  Source,
-} from "@gi-ts/glib2";
+import Glib from "@gi-ts/glib2";
 
 let timeoutSourceIds: number[] | null = [];
 
 export function delay(milliseconds: number) {
   return new Promise((resolve) => {
-    const timeoutId = timeout_add(PRIORITY_DEFAULT, milliseconds, () => {
-      removeFinishedTimeoutId(timeoutId);
-      resolve(undefined);
+    const timeoutId = Glib.timeout_add(
+      Glib.PRIORITY_DEFAULT,
+      milliseconds,
+      () => {
+        removeFinishedTimeoutId(timeoutId);
+        resolve(undefined);
 
-      return SOURCE_REMOVE;
-    });
+        return Glib.SOURCE_REMOVE;
+      }
+    );
 
     if (!timeoutSourceIds) {
       timeoutSourceIds = [];
@@ -29,7 +28,7 @@ function removeFinishedTimeoutId(timeoutId: number) {
 
 export function disposeDelayTimeouts() {
   timeoutSourceIds?.forEach((sourceId) => {
-    Source.remove(sourceId);
+    Glib.Source.remove(sourceId);
   });
 
   timeoutSourceIds = null;

@@ -1,10 +1,10 @@
-import { PanelManager } from "./panel-manager";
-import { spawn_command_line_async } from "@gi-ts/glib2";
+import * as Main from "gnomejs://main.js";
 
-const Main = imports.ui.main;
+import Glib from "@gi-ts/glib2";
+
+import { PanelManager } from "./panel-manager";
+
 const PanelBox = Main.layoutManager.panelBox;
-const ExtensionUtils = imports.misc.extensionUtils;
-const extensionPath = ExtensionUtils.getCurrentExtension().path;
 
 /**
  * On Wayland, making the panel visible is not enough,
@@ -13,10 +13,14 @@ const extensionPath = ExtensionUtils.getCurrentExtension().path;
  * app with invisible window (always on top) is started. That makes the panel visible.
  */
 export class WaylandPanelManager implements PanelManager {
-  private constructor() {}
+  private constructor(extensionPath: string) {
+    this.extensionPath = extensionPath;
+  }
 
-  static createAndInitialize(): PanelManager {
-    const manager = new WaylandPanelManager();
+  private extensionPath: string;
+
+  static createAndInitialize(extensionPath: string): PanelManager {
+    const manager = new WaylandPanelManager(extensionPath);
     manager.spawnDummyApp();
 
     return manager;
@@ -31,12 +35,12 @@ export class WaylandPanelManager implements PanelManager {
   }
 
   dispose(): void {
-    spawn_command_line_async('pkill -f "marcinjahn.com/dummy-window.js"');
+    Glib.spawn_command_line_async('pkill -f "marcinjahn.com/dummy-window.js"');
   }
 
   private async spawnDummyApp() {
-    spawn_command_line_async(
-      `sh -c "GDK_BACKEND=x11 gjs ${extensionPath}/dummy-window.js"`
+    Glib.spawn_command_line_async(
+      `sh -c "GDK_BACKEND=x11 gjs ${this.extensionPath}/dummy-window.js"`
     );
   }
 }

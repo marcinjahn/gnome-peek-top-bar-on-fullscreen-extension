@@ -1,3 +1,8 @@
+import * as Main from "gnomejs://main.js";
+import { Extension } from "gnomejs://extension.js";
+
+import Meta from "@gi-types/meta10";
+
 import { HotEdge } from "./edges/hot-edge";
 import { isFullscreen, isInOverview } from "./utils/display";
 import { delay, disposeDelayTimeouts } from "./utils/delay";
@@ -10,24 +15,16 @@ import {
   toggleAnyIndicator,
 } from "panel/utils";
 
-const Main = imports.ui.main;
-const Meta = imports.gi.Meta;
-
-class Extension {
-  private uuid: string | null = null;
+export default class PeekTopBarOnFullscreenExtension extends Extension {
   private hotEdge: HotEdge | null = null;
   private hotCornersSub: any = null;
   private panelManager: PanelManager | null = null;
-
-  constructor(uuid: string) {
-    this.uuid = uuid;
-  }
 
   enable() {
     log(`Enabling extension ${this.uuid}`);
 
     if (Meta.is_wayland_compositor()) {
-      this.panelManager = WaylandPanelManager.createAndInitialize();
+      this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
     } else {
       this.panelManager = new X11PanelManager();
     }
@@ -93,8 +90,4 @@ class Extension {
 
     Main.layoutManager._updateHotCorners();
   }
-}
-
-export default function (meta: { uuid: string }): Extension {
-  return new Extension(meta.uuid);
 }

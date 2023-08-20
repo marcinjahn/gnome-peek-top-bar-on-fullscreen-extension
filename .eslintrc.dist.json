@@ -3,13 +3,15 @@
     "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 2022
+    "ecmaVersion": 2022,
+    "sourceType": "module"
   },
   "extends": [],
   "rules": {
     "lines-between-class-members": ["error", "always"],
     "padding-line-between-statements": [
       "error",
+      { "blankLine": "always", "prev": "*", "next": "class" },
       { "blankLine": "always", "prev": "function", "next": "function" },
       { "blankLine": "always", "prev": "*", "next": "return" }
     ]

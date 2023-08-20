@@ -1,8 +1,10 @@
-const Shell = imports.gi.Shell;
-const Meta = imports.gi.Meta;
+import Shell from "gi://Shell";
+import * as Layout from "gnomejs://layout.js";
+
+import Meta from "@gi-types/meta10";
 
 export class Barrier {
-  private pressureBarrier: any;
+  private pressureBarrier: Layout.PressureBarrier | null;
   private nativeBarrier: any;
 
   constructor(
@@ -13,7 +15,7 @@ export class Barrier {
   ) {}
 
   activate() {
-    this.pressureBarrier = new imports.ui.layout.PressureBarrier(
+    this.pressureBarrier = new Layout.PressureBarrier(
       this.triggerMode === TriggerMode.Delayed ? 15 : 0,
       this.triggerMode === TriggerMode.Delayed ? 200 : 0,
       Shell.ActionMode.NORMAL
