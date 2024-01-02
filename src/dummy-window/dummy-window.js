@@ -20,6 +20,11 @@ class DummyWindow {
     win.set_skip_taskbar_hint(true);
     win.set_skip_pager_hint(true);
     win.set_accept_focus(false);
+
+    const screen = Gdk.Screen.get_default();
+    const primaryScreen = screen.get_monitor_geometry(0);
+    const {x, y} = primaryScreen;
+    win.move(x + 100, y + 100);
     win.present();
   }
 
