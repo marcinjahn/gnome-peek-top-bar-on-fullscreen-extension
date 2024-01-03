@@ -55,6 +55,7 @@ export default [
         targets: [
           { src: "./resources/metadata.json", dest: `${buildPath}` },
           { src: "./resources/schemas", dest: `${buildPath}` },
+          { src: "./src/dummy-window/*", dest: `${buildPath}` },
         ],
       }),
       cleanup({
