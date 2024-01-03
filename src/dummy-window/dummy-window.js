@@ -1,5 +1,5 @@
 imports.gi.versions.Gtk = "3.0";
-const { Gtk } = imports.gi;
+const { Gtk, Gdk } = imports.gi;
 
 class DummyWindow {
   constructor() {
@@ -23,7 +23,7 @@ class DummyWindow {
 
     const screen = Gdk.Screen.get_default();
     const primaryScreen = screen.get_monitor_geometry(0);
-    const {x, y} = primaryScreen;
+    const { x, y } = primaryScreen;
     win.move(x + 100, y + 100);
     win.present();
   }
