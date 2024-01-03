@@ -4,12 +4,12 @@
 <img src="https://raw.githubusercontent.com/marcinjahn/gnome-peek-top-bar-on-fullscreen-extension/main/img/get-it-on-ego.svg" height="100" alt="Get it on GNOME Extensions"/>
 </a>
 
-This is a Gnome Shell Extension that enables Gnome top bar (panel) to show up
-while you're playing full screen content (like a YouTube video). Just hover the
+This is a Gnome Shell Extension that enables the Gnome top bar (panel) to show up
+while you're playing full-screen content (like a YouTube video). Just hover the
 mouse cursor to the top of the screen, and the top bar will show up. This way,
-you can quickly check the time, or swich some toggles.
+you can quickly check the time, or switch some toggles.
 
-This is similar to what macOS offers for full screen apps.
+This is similar to what macOS offers for full-screen apps.
 
 ![Project preview](./img/preview.webp)
 
@@ -36,7 +36,7 @@ npm run build
 npm run linkdist
 ```
 
-The last command will creae a soft link at
+The last command will create a soft link at
 `~/.local/share/gnome-shell/extensions/peek-top-bar-on-fullscreen@marcinjahn.com`,
 which allows you to enable the extension on your system (e.g., via [Extensions
 Manager](https://flathub.org/apps/com.mattjakeman.ExtensionManager)).
@@ -51,6 +51,7 @@ restart the session:
 
 - this extension is incompatible with [Blur My
   Shell](https://extensions.gnome.org/extension/3193/blur-my-shell/) extension.
+- Firefox's full-screen doesn't seem to work with this extension (although it used to)
 
 ## Mentions
 
