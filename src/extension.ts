@@ -21,7 +21,7 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
   private panelManager: PanelManager | null = null;
 
   enable() {
-    log(`Enabling extension ${this.uuid}`);
+    console.log(`Enabling extension ${this.uuid}`);
 
     if (Meta.is_wayland_compositor()) {
       this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
@@ -75,7 +75,7 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
   }
 
   disable() {
-    log(`Disabling extension ${this.uuid}`);
+    console.log(`Disabling extension ${this.uuid}`);
 
     this.hotEdge?.dispose();
     this.hotEdge = null;
