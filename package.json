@@ -34,7 +34,7 @@
     "rollup-plugin-copy": "^3.4.0"
   },
   "dependencies": {
-    "@gi-types/meta10": "^10.0.1",
+    "@girs/meta-14": "14.0.0-3.3.0",
     "typescript": "5.0.4"
   }
 }

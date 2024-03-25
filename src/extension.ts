@@ -1,7 +1,7 @@
 import * as Main from "gnomejs://main.js";
 import { Extension } from "gnomejs://extension.js";
 
-import Meta from "@gi-types/meta10";
+import Meta from '@girs/meta-14';
 
 import { HotEdge } from "./edges/hot-edge";
 import { isFullscreen, isInOverview } from "./utils/display";

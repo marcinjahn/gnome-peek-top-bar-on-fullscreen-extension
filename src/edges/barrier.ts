@@ -1,11 +1,11 @@
 import Shell from "gi://Shell";
 import * as Layout from "gnomejs://layout.js";
 
-import Meta from "@gi-types/meta10";
+import Meta from '@girs/meta-14';
 
 export class Barrier {
   private pressureBarrier: Layout.PressureBarrier | null;
-  private nativeBarrier: any;
+  private nativeBarrier: Meta.Barrier | null;
 
   constructor(
     private position: Position,
@@ -25,7 +25,7 @@ export class Barrier {
     const { x1, x2, y1, y2 } = this.position;
 
     this.nativeBarrier = new Meta.Barrier({
-      display: global.display,
+      backend: global.backend,
       x1,
       x2,
       y1,
