@@ -51,7 +51,6 @@ restart the session:
 
 - this extension is incompatible with [Blur My
   Shell](https://extensions.gnome.org/extension/3193/blur-my-shell/) extension.
-- Firefox's full-screen doesn't seem to work with this extension (although it used to)
 
 ## Mentions
 
