@@ -64,14 +64,21 @@ declare module "gnomejs://main.js" {
 }
 
 declare module "gnomejs://extension.js" {
+  import Gio from "@gi-ts/gio2";
+
   export class Extension {
     uuid: string;
     path: string;
+    getSettings(): Gio.Settings;
   }
 }
 
 declare module "gnomejs://prefs.js" {
-  export class ExtensionPreferences {}
+  import Gio from "@gi-ts/gio2";
+
+  export class ExtensionPreferences {
+    getSettings(): Gio.Settings;
+  }
 }
 
 declare module "gi://Shell" {

@@ -26,6 +26,12 @@ const extensionPaths = {
   "gnomejs://layout.js": "resource:///org/gnome/shell/ui/layout.js",
 };
 
+const prefsPaths = {
+  ...commonPaths,
+  "gnomejs://prefs.js":
+    "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js",
+};
+
 export default [
   {
     input: "src/extension.ts",
@@ -57,6 +63,32 @@ export default [
           { src: "./resources/schemas", dest: `${buildPath}` },
           { src: "./src/dummy-window/*", dest: `${buildPath}` },
         ],
+      }),
+      cleanup({
+        comments: "none",
+      }),
+    ],
+  },
+  {
+    input: "src/prefs.ts",
+    treeshake: {
+      moduleSideEffects: "no-external",
+    },
+    output: {
+      file: `${buildPath}/prefs.js`,
+      format: "es",
+      name: "prefs",
+      exports: "default",
+      paths: prefsPaths,
+      assetFileNames: "[name][extname]",
+    },
+    plugins: [
+      commonjs(),
+      nodeResolve({
+        preferBuiltins: false,
+      }),
+      typescript({
+        tsconfig: "./tsconfig.json",
       }),
       cleanup({
         comments: "none",
