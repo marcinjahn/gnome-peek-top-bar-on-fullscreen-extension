@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.peek-top-bar-on-fullscreen"
+          path="/org/gnome/shell/extensions/peek-top-bar-on-fullscreen/">
+    <key name="panel-edge" type="s">
+      <default>'top'</default>
+      <summary>Panel Edge Position</summary>
+      <description>Which edge of the screen should trigger the panel peek (top, bottom, left, right)</description>
+    </key>
+  </schema>
+</schemalist>

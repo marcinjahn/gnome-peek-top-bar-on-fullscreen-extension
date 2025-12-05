@@ -1,7 +1,7 @@
 import Shell from "gi://Shell";
 import * as Layout from "gnomejs://layout.js";
 
-import Meta from '@girs/meta-14';
+import Meta from "@girs/meta-14";
 
 export class Barrier {
   private pressureBarrier: Layout.PressureBarrier | null;
@@ -24,16 +24,29 @@ export class Barrier {
 
     const { x1, x2, y1, y2 } = this.position;
 
+    let directions: number;
+    switch (this.hitDirection) {
+      case HitDirection.FromBottom:
+        directions = Meta.BarrierDirection.POSITIVE_Y;
+        break;
+      case HitDirection.FromTop:
+        directions = Meta.BarrierDirection.NEGATIVE_Y;
+        break;
+      case HitDirection.FromRight:
+        directions = Meta.BarrierDirection.POSITIVE_X;
+        break;
+      case HitDirection.FromLeft:
+        directions = Meta.BarrierDirection.NEGATIVE_X;
+        break;
+    }
+
     this.nativeBarrier = new Meta.Barrier({
       backend: global.backend,
       x1,
       x2,
       y1,
       y2,
-      directions:
-        this.hitDirection === HitDirection.FromBottom
-          ? Meta.BarrierDirection.POSITIVE_Y
-          : Meta.BarrierDirection.NEGATIVE_Y,
+      directions,
     });
 
     this.pressureBarrier.addBarrier(this.nativeBarrier);
@@ -66,6 +79,8 @@ export interface Position {
 export enum HitDirection {
   FromTop,
   FromBottom,
+  FromLeft,
+  FromRight,
 }
 
 export enum TriggerMode {

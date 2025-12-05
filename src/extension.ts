@@ -1,9 +1,10 @@
 import * as Main from "gnomejs://main.js";
 import { Extension } from "gnomejs://extension.js";
 
-import Meta from '@girs/meta-14';
+import Meta from "@girs/meta-14";
+import Gio from "@gi-ts/gio2";
 
-import { HotEdge } from "./edges/hot-edge";
+import { HotEdge, EdgePosition } from "./edges/hot-edge";
 import { isFullscreen, isInOverview } from "./utils/display";
 import { delay, disposeDelayTimeouts } from "./utils/delay";
 import { PanelManager } from "./panel/panel-manager";
@@ -19,9 +20,13 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
   private hotEdge: HotEdge | null = null;
   private hotCornersSub: any = null;
   private panelManager: PanelManager | null = null;
+  private settings: Gio.Settings;
+  private settingsSub: number | null = null;
 
   enable() {
     console.log(`Enabling extension ${this.uuid}`);
+
+    this.settings = this.getSettings();
 
     if (Meta.is_wayland_compositor()) {
       this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
@@ -34,6 +39,10 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
       this.setupHotEdge();
     });
 
+    this.settingsSub = this.settings.connect("changed::panel-edge", () => {
+      this.setupHotEdge();
+    });
+
     this.setupHotEdge();
   }
 
@@ -41,9 +50,12 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
     this.hotEdge?.dispose();
 
     const primaryMonitor = Main.layoutManager.primaryMonitor;
+    const edgePosition = (this.settings.get_string("panel-edge") ||
+      "top") as EdgePosition;
 
     this.hotEdge = new HotEdge(
       primaryMonitor,
+      edgePosition,
       getPanelHeight(),
       () => {
         if (!isFullscreen(primaryMonitor)) {
@@ -82,6 +94,11 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
 
     Main.layoutManager.disconnect(this.hotCornersSub);
     this.hotCornersSub = null;
+
+    if (this.settingsSub !== null) {
+      this.settings.disconnect(this.settingsSub);
+      this.settingsSub = null;
+    }
 
     this.panelManager?.dispose();
     this.panelManager = null;

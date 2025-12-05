@@ -5,18 +5,28 @@ import { LeaveDetector } from "./leave-detector";
 
 export class CursorPositionLeaveDetector implements LeaveDetector {
   private timeoutId: number | null = null;
-  private boundsChecker: (mouyseY: number) => boolean;
+  private boundsChecker: (mouseX: number, mouseY: number) => boolean;
 
   constructor(
     private position: Position,
-    hitDirection: HitDirection,
+    private hitDirection: HitDirection,
     private leaveAction: () => void,
     private leaveCondition?: () => boolean
   ) {
-    this.boundsChecker =
-      hitDirection === HitDirection.FromBottom
-        ? this.fromBottomBoundsChecker
-        : this.fromTopBoundsChecker;
+    switch (hitDirection) {
+      case HitDirection.FromBottom:
+        this.boundsChecker = this.fromBottomBoundsChecker;
+        break;
+      case HitDirection.FromTop:
+        this.boundsChecker = this.fromTopBoundsChecker;
+        break;
+      case HitDirection.FromRight:
+        this.boundsChecker = this.fromRightBoundsChecker;
+        break;
+      case HitDirection.FromLeft:
+        this.boundsChecker = this.fromLeftBoundsChecker;
+        break;
+    }
   }
 
   activate() {
@@ -39,16 +49,24 @@ export class CursorPositionLeaveDetector implements LeaveDetector {
   }
 
   private isOutOfBounds(): boolean {
-    let [_, mouse_y, __] = global.get_pointer();
+    let [mouse_x, mouse_y, __] = global.get_pointer();
 
-    return this.boundsChecker(mouse_y);
+    return this.boundsChecker(mouse_x, mouse_y);
   }
 
-  private fromTopBoundsChecker(mouseY: number): boolean {
+  private fromTopBoundsChecker(mouseX: number, mouseY: number): boolean {
     return this.position.y1 < mouseY;
   }
 
-  private fromBottomBoundsChecker(mouseY: number): boolean {
+  private fromBottomBoundsChecker(mouseX: number, mouseY: number): boolean {
     return this.position.y1 > mouseY;
+  }
+
+  private fromLeftBoundsChecker(mouseX: number, mouseY: number): boolean {
+    return this.position.x1 < mouseX;
+  }
+
+  private fromRightBoundsChecker(mouseX: number, mouseY: number): boolean {
+    return this.position.x1 > mouseX;
   }
 }
