@@ -20,7 +20,7 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
   private hotEdge: HotEdge | null = null;
   private hotCornersSub: any = null;
   private panelManager: PanelManager | null = null;
-  private settings: Gio.Settings;
+  private settings: Gio.Settings | null = null;
   private settingsSub: number | null = null;
 
   enable() {
@@ -50,7 +50,7 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
     this.hotEdge?.dispose();
 
     const primaryMonitor = Main.layoutManager.primaryMonitor;
-    const edgePosition = (this.settings.get_string("panel-edge") ||
+    const edgePosition = (this.settings!.get_string("panel-edge") ||
       "top") as EdgePosition;
 
     this.hotEdge = new HotEdge(
@@ -96,9 +96,11 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
     this.hotCornersSub = null;
 
     if (this.settingsSub !== null) {
-      this.settings.disconnect(this.settingsSub);
+      this.settings?.disconnect(this.settingsSub);
       this.settingsSub = null;
     }
+
+    this.settings = null;
 
     this.panelManager?.dispose();
     this.panelManager = null;

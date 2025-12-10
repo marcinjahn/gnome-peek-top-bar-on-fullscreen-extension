@@ -5,8 +5,10 @@ import Gtk from "@gi-ts/gtk4";
 import Gio from "@gi-ts/gio2";
 
 export default class PeekTopBarOnFullscreenPreferences extends ExtensionPreferences {
+  private settings: Gio.Settings;
+
   fillPreferencesWindow(window: Adw.PreferencesWindow) {
-    const settings = this.getSettings();
+    this.settings = this.getSettings();
 
     const page = new Adw.PreferencesPage({
       title: "General",
@@ -27,19 +29,17 @@ export default class PeekTopBarOnFullscreenPreferences extends ExtensionPreferen
       model: Gtk.StringList.new(["Top", "Bottom", "Left", "Right"]),
     });
 
-    // Set the current value
-    const currentValue = settings.get_string("panel-edge") || "top";
+    const currentValue = this.settings.get_string("panel-edge") || "top";
     const options = ["top", "bottom", "left", "right"];
     const selectedIndex = options.indexOf(currentValue);
     if (selectedIndex >= 0) {
       row.set_selected(selectedIndex);
     }
 
-    // Connect the change signal
     row.connect("notify::selected", () => {
       const selected = row.get_selected();
       if (selected >= 0 && selected < options.length) {
-        settings.set_string("panel-edge", options[selected]);
+        this.settings.set_string("panel-edge", options[selected]);
       }
     });
 
