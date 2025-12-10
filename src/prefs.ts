@@ -2,13 +2,12 @@ import { ExtensionPreferences } from "gnomejs://prefs.js";
 
 import Adw from "@gi-ts/adw1";
 import Gtk from "@gi-ts/gtk4";
-import Gio from "@gi-ts/gio2";
 
 export default class PeekTopBarOnFullscreenPreferences extends ExtensionPreferences {
-  private settings: Gio.Settings;
-
   fillPreferencesWindow(window: Adw.PreferencesWindow) {
-    this.settings = this.getSettings();
+    const settings = this.getSettings();
+    // @ts-ignore Using window_settings is recommended in docs https://gjs.guide/extensions/development/preferences.html#prefs-js
+    window._settings = settings;
 
     const page = new Adw.PreferencesPage({
       title: "General",
@@ -29,7 +28,7 @@ export default class PeekTopBarOnFullscreenPreferences extends ExtensionPreferen
       model: Gtk.StringList.new(["Top", "Bottom", "Left", "Right"]),
     });
 
-    const currentValue = this.settings.get_string("panel-edge") || "top";
+    const currentValue = settings.get_string("panel-edge") || "top";
     const options = ["top", "bottom", "left", "right"];
     const selectedIndex = options.indexOf(currentValue);
     if (selectedIndex >= 0) {
@@ -39,7 +38,7 @@ export default class PeekTopBarOnFullscreenPreferences extends ExtensionPreferen
     row.connect("notify::selected", () => {
       const selected = row.get_selected();
       if (selected >= 0 && selected < options.length) {
-        this.settings.set_string("panel-edge", options[selected]);
+        settings.set_string("panel-edge", options[selected]);
       }
     });
 
