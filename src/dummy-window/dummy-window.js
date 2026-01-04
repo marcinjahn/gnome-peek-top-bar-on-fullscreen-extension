@@ -26,6 +26,8 @@ class DummyWindow {
     const { x, y } = primaryScreen;
     win.move(x + 100, y + 100);
     win.present();
+
+    win.set_opacity(0.0);
   }
 
   createApp() {
