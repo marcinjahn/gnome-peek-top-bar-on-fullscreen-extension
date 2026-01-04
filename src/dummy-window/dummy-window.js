@@ -27,7 +27,6 @@ class DummyWindow {
     win.move(x + 100, y + 100);
     win.present();
 
-    win.move(0, 0);
     win.set_opacity(0.0);
   }
 
