@@ -1,5 +1,6 @@
 import * as Main from "gnomejs://main.js";
 import { Extension } from "gnomejs://extension.js";
+import * as Config from "gnomejs://config.js";
 
 import Meta from "@girs/meta-14";
 import Gio from "@gi-ts/gio2";
@@ -28,7 +29,10 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
 
     this.settings = this.getSettings();
 
-    if (Meta.is_wayland_compositor()) {
+    const GNOME_MAJOR_VERSION = Number(Config.PACKAGE_VERSION.split(".")[0]);
+    if (GNOME_MAJOR_VERSION >= 50) {
+      this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
+    } else if (Meta.is_wayland_compositor()) {
       this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
     } else {
       this.panelManager = new X11PanelManager();

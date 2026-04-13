@@ -24,6 +24,7 @@ const extensionPaths = {
   "gnomejs://main.js": "resource:///org/gnome/shell/ui/main.js",
   "gnomejs://volume.js": "resource:///org/gnome/shell/ui/status/volume.js",
   "gnomejs://layout.js": "resource:///org/gnome/shell/ui/layout.js",
+  "gnomejs://config.js": "resource:///org/gnome/shell/misc/config.js",
 };
 
 const prefsPaths = {
