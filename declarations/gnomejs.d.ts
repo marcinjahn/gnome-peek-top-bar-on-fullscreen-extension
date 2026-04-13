@@ -99,7 +99,3 @@ declare module "gnomejs://layout.js" {
     destroy(): void;
   }
 }
-
-declare module "gnomejs://config.js" {
-  export const PACKAGE_VERSION: string;
-}
