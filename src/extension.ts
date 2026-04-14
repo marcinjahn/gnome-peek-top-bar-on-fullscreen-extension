@@ -1,7 +1,6 @@
 import * as Main from "gnomejs://main.js";
 import { Extension } from "gnomejs://extension.js";
 
-import Meta from "@girs/meta-14";
 import Gio from "@gi-ts/gio2";
 
 import { HotEdge, EdgePosition } from "./edges/hot-edge";
@@ -9,7 +8,6 @@ import { isFullscreen, isInOverview } from "./utils/display";
 import { delay, disposeDelayTimeouts } from "./utils/delay";
 import { PanelManager } from "./panel/panel-manager";
 import { WaylandPanelManager } from "panel/wayland-panel-manager";
-import { X11PanelManager } from "panel/x11-panel-manager";
 import {
   getPanelHeight,
   isAnyPanelMenuOpen,
@@ -27,12 +25,7 @@ export default class PeekTopBarOnFullscreenExtension extends Extension {
     console.log(`Enabling extension ${this.uuid}`);
 
     this.settings = this.getSettings();
-
-    if (Meta.is_wayland_compositor()) {
-      this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
-    } else {
-      this.panelManager = new X11PanelManager();
-    }
+    this.panelManager = WaylandPanelManager.createAndInitialize(this.path);
 
     const layoutManager = Main.layoutManager;
     this.hotCornersSub = layoutManager.connect("hot-corners-changed", () => {
