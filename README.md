@@ -42,10 +42,7 @@ which allows you to enable the extension on your system (e.g., via [Extensions
 Manager](https://flathub.org/apps/com.mattjakeman.ExtensionManager)).
 
 Anytime you change anything, rebuild the extension with `npm run build`, and
-restart the session:
-
-- on Wayland, log out and log in (I know, it's painful),
-- on X11, open "Run a Command" dialog (Alt + F2), type "r" and press Enter
+restart the session by logging out and logging in (I know, it's painful),
 
 ## Remarks
 

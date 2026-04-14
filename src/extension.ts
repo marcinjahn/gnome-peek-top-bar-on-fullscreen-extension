@@ -1,7 +1,6 @@
 import * as Main from "gnomejs://main.js";
 import { Extension } from "gnomejs://extension.js";
 
-import Meta from "@girs/meta-14";
 import Gio from "@gi-ts/gio2";
 
 import { HotEdge, EdgePosition } from "./edges/hot-edge";
@@ -9,7 +8,6 @@ import { isFullscreen, isInOverview } from "./utils/display";
 import { delay, disposeDelayTimeouts } from "./utils/delay";
 import { PanelManager } from "./panel/panel-manager";
 import { WaylandPanelManager } from "panel/wayland-panel-manager";
-import { X11PanelManager } from "panel/x11-panel-manager";
 import {
   getPanelHeight,
   isAnyPanelMenuOpen,
