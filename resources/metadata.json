@@ -5,5 +5,5 @@
   "shell-version": ["50"],
   "url": "https://github.com/marcinjahn/gnome-peek-top-bar-on-fullscreen-extension",
   "settings-schema": "org.gnome.shell.extensions.peek-top-bar-on-fullscreen",
-  "version": 22
+  "version": 23
 }
