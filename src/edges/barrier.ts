@@ -1,7 +1,7 @@
 import Shell from "gi://Shell";
 import * as Layout from "gnomejs://layout.js";
 
-import Meta from "@girs/meta-14";
+import Meta from "@girs/meta-17";
 
 export class Barrier {
   private pressureBarrier: Layout.PressureBarrier | null;
