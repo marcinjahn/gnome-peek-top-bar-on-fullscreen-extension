@@ -35,6 +35,7 @@ const prefsPaths = {
 export default [
   {
     input: "src/extension.ts",
+    external: ["@girs/meta-17"],
     treeshake: {
       moduleSideEffects: "no-external",
     },
