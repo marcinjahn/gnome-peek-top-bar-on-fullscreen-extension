@@ -12,7 +12,7 @@ const commonPaths = {
   "@gi-types/gvc1": "gi://Gvc",
   "@gi-ts/glib2": "gi://GLib",
   "@gi-ts/gio2": "gi://Gio",
-  "gi://Meta?version=14": "gi://Meta",
+  "@girs/meta-17": "gi://Meta",
   "@gi-ts/clutter1": "gi://Clutter",
   "@gi-ts/gobject2": "gi://GObject",
 };

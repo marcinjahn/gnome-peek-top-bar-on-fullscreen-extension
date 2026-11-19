@@ -13,6 +13,8 @@ This is similar to what macOS offers for full-screen apps.
 
 ![Project preview](./img/preview.webp)
 
+Compatible with GNOME Shell 50 and 51.
+
 ## Preview
 
 [peek-topbar-on-fullscreen-preview.webm](https://github.com/marcinjahn/gnome-top-bar-on-fullscreen-extension/assets/10273406/91fb0638-8dcd-421f-8be0-a9457c02cbc7)
